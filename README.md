@@ -259,6 +259,7 @@ A production-style, cloud-deployed, multi-task NLP system with:
 | Cloud            | AWS EC2, S3, RDS                      |
 
 FOLDER STRUCTURE
+
 ├── data/
 ├── notebooks/
 ├── models/
