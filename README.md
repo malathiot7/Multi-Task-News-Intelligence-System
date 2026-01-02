@@ -280,7 +280,15 @@ FOLDER STRUCTURE
 ├── requirements.txt
 ├── README.md
 
-
+models/classification/ml/      -> tfidf.pkl, logreg.pkl, label_encoder.pkl
+models/classification/dl/      -> bilstm_classifier.py, bilstm_classifier.pt, word2idx.pkl, idx2label.pkl
+models/classification/transformer/ -> bert_classifier/...
+ner/ml/                         -> rule_patterns.json
+ner/dl/                         -> bilstm_ner.py, bilstm_ner.pt, word2idx.pkl, id2tag.pkl
+ner/transformer/                -> bert_ner/..., id2tag.pkl
+summarization/ml/               -> tfidf_extractive.pkl
+summarization/dl/               -> seq2seq_lstm.py, seq2seq_lstm.pt, word2idx.pkl, idx2word.pkl
+summarization/transformer/      -> bart_summarizer/...
 
 
 
