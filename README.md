@@ -8,17 +8,21 @@ Cloud Deployment: Hugging Face, Streamlit, AWS EC2, S3, and RDS
 
 📌 Problem Statement
 Build an end-to-end multi-task NLP system that processes news articles to perform:
+
 1.	Text Classification
 Predict category → Politics, Business, Tech, Sports, Entertainment, etc.
-2.	Named Entity Recognition (NER)
+
+3.	Named Entity Recognition (NER)
 Extract entities → PERSON, ORG, LOC, DATE, PRODUCT, etc.
-3.	Summarization
+
+5.	Summarization
 Generate concise summaries → Extractive + Abstractive
 For each task you must build:
 •	From-Scratch Traditional ML Models
 •	From-Scratch DL Models
 •	Pretrained Transformer Models
 The system must be deployed as a unified Streamlit/Gradio web app on AWS EC2, using S3 for model storage and RDS for logging user activity
+
 
 🎯 Objectives
 •	Implement classification, NER, summarization pipelines under one system.
@@ -31,6 +35,7 @@ The system must be deployed as a unified Streamlit/Gradio web app on AWS EC2, us
 🏗️ Approach & Architecture
 1. Data Preparation
 Dataset: Microsoft PENS – Personalized News Headlines / Articles
+
 2. Preprocessing
 Common text cleaning:
 ✔ Remove HTML, emojis, URLs
@@ -48,7 +53,8 @@ Feature Representations
 •	BoW / TF-IDF (CountVectorizer / TfidfVectorizer)
 •	Word2Vec / GloVe embeddings
 •	Transformer tokenization (BERT, T5, BART)
-📊 3. Exploratory Data Analysis
+
+3. Exploratory Data Analysis
 Classification EDA:
 •	Category distribution
 •	Per-category word counts
@@ -64,7 +70,7 @@ General text stats:
 •	Frequent n-grams
 •	TF-IDF heatmaps per topic
 
-🤖 4. Model Building
+ 4. Model Building
 You will build 3 model families per task:
 
 | Task           | ML Baseline       | Custom DL           | Transformer           |
@@ -73,46 +79,56 @@ You will build 3 model families per task:
 | NER            | Rule-based        | BiLSTM / BiLSTM-CRF | BERT Token Classifier |
 | Summarization  | TF-IDF / TextRank | Seq2Seq (LSTM)      | T5, BART              |
 
+
 4.1 Text Classification
+
 [1] ML Baselines (BoW / TF-IDF)
 •	Logistic Regression
 •	SVM
 •	Multinomial Naive Bayes
+
 [2] DL Baseline (Word2Vec + CNN/LSTM/BiLSTM)
 •	Embedding layer (Word2Vec / GloVe / trainable)
 •	CNN or LSTM/BiLSTM
 •	Dropout + regularization
 •	Early stopping
+
 [3] Pretrained Transformers
 •	BERT / DistilBERT / RoBERTa
 •	Fine-tuning (Trainer API or custom loop)
 ________________________________________
 4.2 Named Entity Recognition (NER)
+
 [1] Rule-Based Baseline
 •	Regex patterns for:
 o	Capitalized names
 o	Dates
 o	Organizations
 •	Used as a weak baseline
+
 [2] DL Model: BiLSTM or BiLSTM-CRF
 •	Word embeddings (Word2Vec/GloVe)
 •	Optional char embeddings
 •	BiLSTM → Linear → CRF
+
 [3] Transformer NER
 •	BERT-base-cased
 •	RoBERTa-large-NER
 •	Fine-tuning for token classification
 ________________________________________
 4.3 Summarization
+
 [1] Extractive Baseline
 •	TF-IDF sentence scoring
 •	TextRank (optional)
 •	Top-k sentence selection
+
 [2] Custom Seq2Seq (LSTM/GRU)
 •	LSTM/GRU encoder
 •	LSTM/GRU decoder with attention
 •	Teacher forcing
 •	Scheduled sampling
+
 [3] Transformer Summarizers
 •	T5-small / T5-base
 •	BART-base
@@ -133,30 +149,37 @@ Classification
 •	Compare:
 o	BoW vs TF-IDF
 o	Word2Vec vs Transformer
+
 NER
 •	Precision, Recall, F1 (micro, macro, per entity)
 •	Compare:
 o	Rule-based vs BiLSTM vs BERT NER
+
 Summarization
 •	ROUGE-1, ROUGE-2, ROUGE-L
 •	Human evaluation for coherence
 •	Compare extractive vs Seq2Seq vs T5/BART
 
 🖥️ 6. Unified Streamlit Application
+
 Inputs:
 •	Text box / file upload
+
 Task selector:
 •	Classification
 •	NER
 •	Summarization
+
 Model selector:
 •	From-Scratch ML
 •	From-Scratch DL
 •	Pretrained Transformer
+
 Outputs:
 •	Classification: label + confidence
 •	NER: highlighted entities
 •	Summarization: summary (with model comparison option)
+
 
 ☁️ 7. AWS Cloud Deployment
 
@@ -166,6 +189,7 @@ Outputs:
 | S3          | Stores trained models & vectorizers |
 | RDS         | Stores inference & user logs        |
 | IAM         | Secure access control               |
+
 
 7.1 RDS (PostgreSQL/MySQL) – User Interaction Logging
 
@@ -181,6 +205,7 @@ Outputs:
 | output_label | VARCHAR   | Predicted class / summary            |
 | error_flag   | BOOLEAN   | Error indicator                      |
 
+
 Store fields:
 •	user_id
 •	timestamp
@@ -193,6 +218,7 @@ Store fields:
 Use:
 •	SQLAlchemy / psycopg2 / mysqlclient
 •	Credentials via env vars or AWS Secrets Manager
+
 
 7.2 S3 – Model Artifact Storage
 
@@ -217,6 +243,7 @@ s3://nlp-multitask/
     preprocessors/
 Lazy loading recommended for speed.
 
+
 7.3 EC2 – Application Hosting
 Steps:
 1.	Launch Ubuntu EC2
@@ -229,6 +256,7 @@ Steps:
 8.	Optional: reverse proxy with Nginx + HTTPS
 
 🏁 Expected Result
+
 A production-style, cloud-deployed, multi-task NLP system with:
 •	Robust classification
 •	Accurate NER
@@ -238,6 +266,7 @@ A production-style, cloud-deployed, multi-task NLP system with:
 •	Scalable architecture
 
 📚 Project Evaluation Criteria
+
 •	Functionality
 •	Model performance
 •	Deployment quality
@@ -279,6 +308,7 @@ FOLDER STRUCTURE
 │   └── news.py
 ├── requirements.txt
 ├── README.md
+
 
 models/classification/ml/      -> tfidf.pkl, logreg.pkl, label_encoder.pkl
 models/classification/dl/      -> bilstm_classifier.py, bilstm_classifier.pt, word2idx.pkl, idx2label.pkl
