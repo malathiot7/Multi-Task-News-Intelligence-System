@@ -2,9 +2,12 @@
 End-to-end multi-task NLP system for news analytics performing article classification, named entity recognition, and summarization using from-scratch ML/DL models and pretrained transformers. Deployed on AWS with Streamlit UI, S3 model storage, and RDS logging.
 
 ✅ Project Blueprint
+
 Multi-Task News Intelligence System:
+
 Classification, NER, and Summarization using From-Scratch Models & Pretrained Transformers
-Cloud Deployment: Hugging Face, Streamlit, AWS EC2, S3, and RDS
+Cloud Deployment: 
+Hugging Face, Streamlit, AWS EC2, S3, and RDS
 
 📌 Problem Statement
 Build an end-to-end multi-task NLP system that processes news articles to perform:
@@ -38,39 +41,47 @@ Dataset: Microsoft PENS – Personalized News Headlines / Articles
 
 2. Preprocessing
 Common text cleaning:
+
 ✔ Remove HTML, emojis, URLs
 ✔ Normalize punctuation
 ✔ Lower-casing (except transformer or NER models)
 ✔ Whitespace normalization
+
 Tokenization & stopwords:
 •	BoW/TF-IDF → remove stopwords
 •	NER → keep casing + token boundaries
+
 Labeling and sequences:
 •	Classification → LabelEncoder
 •	NER → BIO/BILOU tagging
 •	Summarization → truncation + length control
+
 Feature Representations
 •	BoW / TF-IDF (CountVectorizer / TfidfVectorizer)
 •	Word2Vec / GloVe embeddings
 •	Transformer tokenization (BERT, T5, BART)
 
-3. Exploratory Data Analysis
+4. Exploratory Data Analysis
+   
 Classification EDA:
 •	Category distribution
 •	Per-category word counts
 •	Word clouds / top keywords
+
 NER EDA:
 •	Entity type distribution
 •	Examples of high-entity-density sentences
+
 Summarization EDA:
 •	Article vs summary lengths
 •	Compression ratios
+
 General text stats:
 •	Vocabulary size
 •	Frequent n-grams
 •	TF-IDF heatmaps per topic
 
- 4. Model Building
+ 6. Model Building
 You will build 3 model families per task:
 
 | Task           | ML Baseline       | Custom DL           | Transformer           |
@@ -290,34 +301,49 @@ A production-style, cloud-deployed, multi-task NLP system with:
 FOLDER STRUCTURE
 
 ├── data/
+
 ├── notebooks/
+
 ├── models/
+
 │   ├── classification/
 |        |-ml
 |        |-dl
 |        |-Transformer
+
 │   ├── ner/
 |        |-ml
 |        |-dl
 |        |-Transformer
+
 │   └── summarization/
 |        |-ml
 |        |-dl
 |        |-Transformer
+
 ├── app/
 │   └── news.py
+
 ├── requirements.txt
 ├── README.md
 
 
 models/classification/ml/      -> tfidf.pkl, logreg.pkl, label_encoder.pkl
+
 models/classification/dl/      -> bilstm_classifier.py, bilstm_classifier.pt, word2idx.pkl, idx2label.pkl
+
 models/classification/transformer/ -> bert_classifier/...
+
 ner/ml/                         -> rule_patterns.json
+
 ner/dl/                         -> bilstm_ner.py, bilstm_ner.pt, word2idx.pkl, id2tag.pkl
+
 ner/transformer/                -> bert_ner/..., id2tag.pkl
+
 summarization/ml/               -> tfidf_extractive.pkl
+
 summarization/dl/               -> seq2seq_lstm.py, seq2seq_lstm.pt, word2idx.pkl, idx2word.pkl
+
 summarization/transformer/      -> bart_summarizer/...
 
 
